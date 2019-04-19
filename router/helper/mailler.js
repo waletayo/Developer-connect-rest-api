@@ -3,9 +3,7 @@
 const Helper = require("sendgrid").mail;
 const sg = require('sendgrid')(process.env.SEND_GRID_API_KEY || "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");
 const Logger = require('./logger');
-
 module.exports.sendMail = sendMail;
-
 function sendMail(from, to, subject, content) {
 
     let fromEmail = new Helper.Email(from);

@@ -312,7 +312,7 @@ router.delete('/experience/exp_id', passport.authenticate('jwt', {session: false
             .map(item => item.id)
             .indexOf(req.params.exp_id);
 
-        //splice out of
+        //splice out ofm
         profile.experience.splice(removeIndex, 1);
         //save
 

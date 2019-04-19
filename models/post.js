@@ -5,12 +5,13 @@ const Schema = mongoose.Schema;
 const PostSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
-        required:true,
+        required: true,
         ref: 'users'
 
     },
     text: {
         type: String,
+        refs: 'permission',
         required: true
     },
     likes: [

@@ -24,7 +24,8 @@ router.post("/register", (req, res) => {
     }
 
 
-    User.findOne({email: req.body.email}).then(user => {
+    User.findOne({email: req.body.email})
+        .then(user => {
         if (user) {
             logger.log("Account Created:", Date.now, user);
             return res.status(400).json({
@@ -107,7 +108,7 @@ router.post("/login", (req, res) => {
                         success:true,
                         message: "Login Successfully",
                         data: {
-                            token: "Bearer " + token,
+                            token: token,
                             user: user
                         }
                     });
