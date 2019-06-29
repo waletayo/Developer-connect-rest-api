@@ -3,7 +3,7 @@ const jwtstra = require("passport-jwt").Strategy;
 const ExtJwt = require("passport-jwt").ExtractJwt;
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
-const logger = require("../router/helper/logger");
+const logger = require("../src/router/helper/logger");
 const keys = require("./keys");
 
 const opts = {};

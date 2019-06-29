@@ -14,11 +14,11 @@ app.use(bodyparser.json());
 
 
 //pointing to floder or route
-const users = require("./router/api/users");
-const profile = require("./router/api/profile");
-const post = require("./router/api/post");
+const users = require("./src/router/api/users");
+const profile = require("./src/router/api/profile");
+const post = require("./src/router/api/post");
 
-const logger = require("./router/helper/logger");
+const logger = require("./src/router/helper/logger");
 
 //Database configuration
 const DB = require("./config/keys").mongoURI;
