@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 });
 
 //get post by id
-router.get('/:id', (req, res) => {
+router.get('/post/:id', (req, res) => {
     Post.findById(req.params.id)
         .sort({date: -1})
         .then(post => {
@@ -76,20 +76,20 @@ router.post('/', passport.authenticate("jwt", {session: false}), (req, res) => {
             });
 
         })
-    .catch(err=>{
-        res.json({
-            status:false,
-            message :"creation of post not successful",
-            data:{
-                err:err
-            }
+        .catch(err => {
+            res.json({
+                status: false,
+                message: "creation of post not successful",
+                data: {
+                    err: err
+                }
+            })
         })
-    })
 
 });
 
 //delete post
-router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.delete('/post/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Profile.findOne({user: req.user.id})
         .then(profile => {
             Post.findOne(req.params.id)
@@ -119,18 +119,18 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
                 .then(post => {
                     if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
                         return res.json({
-                            status:false,
-                            message:"post already liked"
+                            status: false,
+                            message: "post already liked"
                         })
                     }
 
                     post.likes.unshift({user: req.user.id});
                     post.save().then(post => {
                         res.json({
-                            status:true,
-                            message:"liked post successful",
-                            data:{
-                                post:post
+                            status: true,
+                            message: "liked post successful",
+                            data: {
+                                post: post
                             }
                         })
                     })
@@ -250,6 +250,24 @@ router.delete('/comment/:id', passport.authenticate('jwt', {session: false}), (r
 
 
 });
+router.get("/mypostt", passport.authenticate("jwt", {session: false}), (req, res) => {
+    Post.find({user: req.user.id})
+        .then(post => {
+            if (!post) {
+                return res.json({
+                    status: false,
+                    message: "unable to fetch all your post"
+                })
+            } else {
+                return res.json({
+                    status: true,
+                    message: "success",
+                    data: post
+                })
+            }
+        })
 
+
+});
 
 module.exports = router;

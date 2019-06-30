@@ -46,40 +46,46 @@ const ProfileSchema=new Schema({
     },
     experience:[
         {
-            title:{
-                type:String,
 
+            title: {
+                type: String,
+                required: true
 
-        },
-        company:{
-            type:String,
 
             },
-         location: {
-                type:String,
-                },
-        from:{
-                type:Date,
-
-        },
-         to:{
-                type:Date,
-                required:true
-         },
-         current:{
-                type:Boolean,
-             required : false
+            company: {
+                type: String,
+                required: true
 
 
+            },
+            location: {
+                type: String,
+                required: true
 
-         },
-         description:{
-                type:String,
+            },
+            from: {
+                type: String,
+                required: true
 
 
-         }
+            },
+            to: {
+                type: String,
+                required: true
+            },
+            current: {
+                type: Boolean,
+                required: false
 
 
+            },
+            description: {
+                type: String,
+                required: true
+
+
+            }
         }
     ],
     education:[
@@ -120,6 +126,7 @@ const ProfileSchema=new Schema({
 
         }
     ],
+
     social:{
         youtube:{
             type:String

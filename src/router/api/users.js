@@ -26,58 +26,57 @@ router.post("/register", (req, res) => {
 
     User.findOne({email: req.body.email})
         .then(user => {
-        if (user) {
-            logger.log("Account Created:", Date.now, user);
-            return res.status(400).json({
-                status:false,
-                message:"email already exist",
-                code:400
-            });
-        } else {
-            const avatar = gravatar.url(req.body.email, {
-                s: "200",
-                r: "pg",
-                d: "mm"
-            });
-
-            const newUser = new User({
-                name: req.body.name,
-                email: req.body.email,
-                avatar: avatar,
-                password: req.body.password
-            });
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
-                    // if(err) throw err;
-                    newUser.password = hash;
-                    newUser
-                        .save()
-                        .then(user => {
-                            let sendEmail = sendGrid.sendMail("no-reply@deveconnector.com", user.email, "Welcome Email",
-                                "Hello " + user.name + " \n" +
-                                "Welcome to deveconnector we are so excited to see you on our platfom, please click the link below to" +
-                                "verify your email http://localhost:9000/api/users/verify-email/alclmalalmas334929e . Thanks " +
-                                "");
-
-                            if (sendEmail) {
-                                logger.log("send email success", sendEmail);
-                            } else {
-                                logger.log("send email failed", sendEmail);
-                            }
-                            logger.log("user:", user);
-                            res.json({
-                                status:true,
-                                message:"signup successful",
-                                data:user
-                            });
-                        })
-                        .catch(err => {
-                            logger.log("password encrypt:", err);
-                        });
+            if (user) {
+                logger.log("Account Created:", Date.now, user);
+                return res.status(400).json({
+                    status: false,
+                    message: "email already exist",
+                    code: 400
                 });
-            });
-        }
-    });
+            } else {
+                const avatar = gravatar.url(req.body.email, {
+                    s: "200",
+                    r: "pg",
+                    d: "mm"
+                });
+
+                const newUser = new User({
+                    name: req.body.name,
+                    email: req.body.email,
+                    avatar: avatar,
+                    password: req.body.password
+                });
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        // if(err) throw err;
+                        newUser.password = hash;
+                        newUser
+                            .save()
+                            .then(user => {
+                                let sendEmail = sendGrid.sendMail("no-reply@deveconnector.com", user.email, "Welcome Email",
+                                    "Hello " + user.name + " \n" +
+                                    "Welcome to deveconnector we are so excited to see you on our platform"
+                                );
+
+                                if (sendEmail) {
+                                    logger.log("send email success", sendEmail);
+                                } else {
+                                    logger.log("send email failed", sendEmail);
+                                }
+                                logger.log("user:", user);
+                                res.json({
+                                    status: true,
+                                    message: "signup successful",
+                                    data: user
+                                });
+                            })
+                            .catch(err => {
+                                logger.log("password encrypt:", err);
+                            });
+                    });
+                });
+            }
+        });
 });
 //user login route
 router.post("/login", (req, res) => {
@@ -105,17 +104,19 @@ router.post("/login", (req, res) => {
                     logger.log("jwt err:", error);
                     res.json({
                         status: true,
-                        success:true,
+                        success: true,
                         message: "Login Successfully",
                         data: {
+                            // token: "Bearer " + token,
                             token: token,
                             user: user
+
                         }
                     });
                 });
             } else {
                 return res.status(400).json({
-                    status : false,
+                    status: false,
                     message: "Invalid email or password",
                 });
             }

@@ -4,13 +4,13 @@ const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const gravatar = require("gravatar");
 const passport = require("passport");
-const cors =require('cors');
+const cors = require('cors');
+const morgan = require("morgan");
 
 const app = express();
 //
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(bodyparser.json());
-
 
 
 //pointing to floder or route
@@ -35,7 +35,6 @@ app.use(passport.initialize());
 app.use(cors());
 
 
-
 //pass config
 require("./config/passport")(passport);
 
@@ -51,6 +50,6 @@ app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/post", post);
 
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 4000;
 app.listen(port, logger.log("Dev-connector server is running on ", port));
 
