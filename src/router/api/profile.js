@@ -132,8 +132,13 @@ router.get('/user/:_id', (req, res) => {
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     console.log(req.file);
     logger.log("req body:", req.body);
-
-
+    //
+    // Profile.findOne({handle: req.body.handle}).then(handle => {
+    //     if (handle) {
+    //         return res.status(400).json({
+    //             message: "handle already exist"
+    //         })
+    //     }
     const profileFields = {};
     profileFields.user = req.user.id;
     if (req.body.handle) profileFields.handle = req.body.handle;
@@ -195,6 +200,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 
 
 });
+
 
 //post and this is to add experince
 //add exp to profile
