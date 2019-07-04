@@ -50,6 +50,6 @@ app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/post", post);
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 app.listen(port, logger.log("Dev-connector server is running on ", port));
 
